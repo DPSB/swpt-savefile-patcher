@@ -1,0 +1,15 @@
+print('How many crystals? (must be an integer that can fit into 4 bytes)')
+crystals = int(input())
+print('How much gold? (must be an integer that can fit into 4 bytes)')
+gold = int(input())
+
+with open("Global.txt", "rb+") as fh:
+    data = fh.read()
+    offset = data.find(b"crystals")
+    fh.seek(offset + 17)
+    fh.write(crystals.to_bytes(4, 'little'))
+    print('Patched crystals!')
+    offset = data.find(b"gold")
+    fh.seek(offset + 13)
+    fh.write(gold.to_bytes(4, 'little'))
+    print('Patched gold!')
